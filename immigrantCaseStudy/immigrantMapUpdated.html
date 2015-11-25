@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic' rel='stylesheet' type='text/css'>
+</head>
+<style>
+
+@import  "http://fonts.googleapis.com/css?family=Lato:300,400,700,900";
+
+@import  "http://fonts.googleapis.com/css?family=Pacifico";
+
+html {
+    background-color: #FFF;
+}
+
+body {
+    margin: 0;
+    font-size: 12px;
+    font-family: "Open Sans",Helvetica,Arial;
+}
+
+div.introduction {
+    width: 800px;
+}
+
+div#svgAndInformation {
+    float: left;
+    width: 800px;
+}
+
+#buttonBarAndColorKey {
+    float: left;
+    width: 190px;
+}
+
+.cursorHand {
+    cursor: pointer;
+    cursor: hand;
+}
+
+.move {
+    cursor: move;
+}
+
+button {
+    background-color: #999;
+    background-image: -webkit-linear-gradient(hsla(0,0%,100%,.05),hsla(0,0%,0%,.1));
+    background-image: -moz-linear-gradient(hsla(0,0%,100%,.05),hsla(0,0%,0%,.1));
+    background-image: -ms-linear-gradient(hsla(0,0%,100%,.05),hsla(0,0%,0%,.1));
+    background-image: -o-linear-gradient(hsla(0,0%,100%,.05),hsla(0,0%,0%,.1));
+    background-image: linear-gradient(hsla(0,0%,100%,.05),hsla(0,0%,0%,.1));
+    border: none;
+    border-radius: .5em;
+    box-shadow: inset 0 0 0 1px hsla(0,0%,0%,.2),inset 0 2px 0 hsla(0,0%,100%,.1),inset 0 1.2em 0 hsla(0,0%,100%,0.1),inset 0 -.2em 0 hsla(0,0%,100%,.1),inset 0 -.25em 0 hsla(0,0%,0%,.25),0 .25em .25em hsla(0,0%,0%,.05);
+    color: #444;
+    cursor: pointer;
+    display: inline-block;
+    font-family: sans-serif;
+    font-size: 1em;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.5;
+    margin: 0 .5em 1em;
+    padding: .5em 1.5em .75em;
+    position: relative;
+    text-decoration: none;
+    text-shadow: 0 1px 1px hsla(0,0%,100%,.25);
+    vertical-align: middle;
+}
+
+button:hover {
+    outline: none;
+}
+
+button:hover,button:focus {
+    box-shadow: inset 0 0 0 1px hsla(0,0%,0%,.2),inset 0 2px 0 hsla(0,0%,100%,.1),inset 0 1.2em 0 hsla(0,0%,100%,.1),inset 0 -.2em 0 hsla(0,0%,100%,.1),inset 0 -.25em 0 hsla(0,0%,0%,.25),inset 0 0 0 3em hsla(0,0%,100%,.2),0 .25em .25em hsla(0,0%,0%,.05);
+}
+
+button:active {
+    box-shadow: inset 0 0 0 1px hsla(0,0%,0%,.2),inset 0 2px 0 hsla(0,0%,100%,.1),inset 0 1.2em 0 hsla(0,0%,100%,.1),inset 0 0 0 3em hsla(0,0%,100%,.2),inset 0 .25em .5em hsla(0,0%,0%,.05),0 -1px 1px hsla(0,0%,0%,.1),0 1px 1px hsla(0,0%,100%,.25);
+    margin-top: .25em;
+    outline: none;
+    padding-bottom: .5em;
+}
+
+#buttonBar {
+    position: relative;
+    padding: 10px;
+    width: 100%;
+    float: left;
+    z-index: 1;
+    background: #fff;
+}
+
+select {
+    position: relative;
+    display: inline;
+    float: left;
+    clear: both;
+    margin: 0;
+}
+
+#nodeTooltip {
+    cursor: auto;
+    z-index: 99;
+    color: #fff;
+    width: 350px;
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    background: rgba(51,51,51,0.9);
+    border: 1px solid rgba(34,34,34,0.9);
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+}
+
+#nodeTooltip:before,#nodeTooltip:after {
+    content: '';
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid rgba(51,51,51,0.9);
+    position: absolute;
+    top: -10px;
+    left: 43%;
+}
+
+#nodeTooltip.hidden {
+    display: none;
+}
+
+#nodeTooltip p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+#linkTooltip {
+    cursor: auto;
+    z-index: 99;
+    color: #fff;
+    max-width: 350px;
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    background: rgba(51,51,51,0.9);
+    border: 1px solid rgba(34,34,34,0.9);
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+}
+
+#linkTooltip:before,#linkTooltip:after {
+    content: '';
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid rgba(51,51,51,0.9);
+    position: absolute;
+    top: -10px;
+    left: 43%;
+}
+
+#linkTooltip.hidden {
+    display: none;
+}
+
+#linkTooltip p {
+    margin: 5px;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+text.shadow {
+    text-shadow: 0 1px 0 #fff,1px 0 0 #fff,0 -1px 0 #fff,-1px 0 0 #fff;
+}
+
+.hidden {
+    display: none;
+}
+
+#colorKey {
+    position: relative;
+    margin: 0;
+    padding: 10px;
+    float: left;
+    width: auto;
+    border-radius: 10px 10px 10px 10px;
+    z-index: 1;
+    background: #fff;
+    border: 1px #000 solid;
+}
+
+.node .nodetext {
+    display: none;
+    -webkit-transition: opacity .1s;
+}
+
+.node {
+    fill: #000;
+    text-shadow: 0 1px 0 #fff,1px 0 0 #fff,0 -1px 0 #fff,-1px 0 0 #fff;
+}
+
+.node-active {
+    stroke-width: 1.5px;
+    fill: #e7ba52;
+}
+
+.node-linked {
+    stroke-width: 1.5px;
+    fill: #e7ba52;
+}
+
+.linkRegular {
+    stroke: lightgray;
+    stroke-width: 2px;
+}
+
+.link-active {
+    stroke-opacity: 1;
+    stroke: #e7ba52;
+    cursor: pointer;
+    cursor: hand;
+    stroke-width: 5px;
+}
+
+.wideLink {
+    stroke-width: 5px;
+}
+
+.overlay {
+    fill: none;
+    pointer-events: all;
+}
+
+table {
+    cursor: auto;
+    font-size: 1em;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    background-color: #fff;
+    border-left: 1px solid #c6c9cc;
+    border-right: 1px solid #c6c9cc;
+    -moz-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+    -moz-transform-origin: 50% 0;
+    -ms-transform-origin: 50% 0;
+    -webkit-transform-origin: 50% 0;
+    transform-origin: 50% 0;
+    -moz-transition: max-height .2s ease-out;
+    -o-transition: max-height .2s ease-out;
+    -webkit-transition: max-height .2s ease-out;
+    transition: max-height .2s ease-out;
+    animation: showAnimation .2s ease-out;
+    -moz-animation: showAnimation .2s ease-out;
+    -webkit-animation: showAnimation .2s ease-out;
+}
+
+td {
+    padding: 6px 10px;
+    text-align: left;
+}
+
+.hyphenation {
+    -ms-word-break: break-word;
+    word-break: break-word;
+    //nonstandardforwebkitword-break: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+}
+
+.linkTooltipAlert {
+    text-align: left;
+    font-style: italic;
+    padding: 6px 10px;
+    margin: 0;
+    background-color: #fff;
+    cursor: auto;
+}
+
+.nodeTooltipAlert {
+    text-align: left;
+    font-style: italic;
+    padding: 6px 10px;
+    margin: 0;
+    background-color: #fff;
+    cursor: auto;
+}
+
+tr:nth-child(even) td {
+    background: #eaeaed;
+}
+
+*,:before,:after {
+    -webkit-border-sizing: border-box;
+    -moz-border-sizing: border-box;
+    border-sizing: border-box;
+}
+
+.title {
+    font-weight: 400;
+    font-size: 40px;
+    text-align: center;
+    line-height: 1.4;
+    color: #C0392B;
+}
+
+#Triangle {
+    fill: #000;
+}
+
+.refugee {
+    fill: #e7ba52;
+}
+
+.text-center {
+    text-align: center;
+}
+
+*,:before,:after {
+    -webkit-border-sizing: border-box;
+    -moz-border-sizing: border-box;
+}
+
+.container {
+    min-width: 350px;
+    max-width: 350px;
+    float: right;
+    list-style: none;
+    position: absolute;
+}
+
+.container > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+}
+
+.title {
+    font-family: 'Pacifico';
+    font-weight: norma;
+    font-size: 40px;
+    text-align: center;
+    line-height: 1.4;
+    color: rgba(51,51,51,0.9);
+}
+
+.dropdown a {
+    text-decoration: none;
+}
+
+.dropdown [data-toggle="dropdown"] {
+    position: relative;
+    display: block;
+    color: #fff;
+    background: rgba(51,51,51,0.9);
+    -moz-box-shadow: 0 1px 0 rgba(78,78,78,0.9) inset,0 -1px 0 rgba(48,48,48,0.9) inset;
+    -webkit-box-shadow: 0 1px 0 rgba(78,78,78,0.9) inset,0 -1px 0 rgba(48,48,48,0.9) inset;
+    box-shadow: 0 1px 0 rgba(78,78,78,0.9) inset,0 -1px 0 rgba(48,48,48,0.9) inset;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.3);
+    padding: 10px;
+}
+
+.dropdown [data-toggle="dropdown"]:hover {
+    background: rgba(78,78,78,0.9);
+}
+
+.dropdown .icon-arrow {
+    position: absolute;
+    display: block;
+    font-size: .7em;
+    color: #fff;
+    top: 14px;
+    right: 10px;
+}
+
+.dropdown .icon-arrow.open {
+    -moz-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    -webkit-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    -moz-transition: -moz-transform .6s;
+    -o-transition: -o-transform .6s;
+    -webkit-transition: -webkit-transform .6s;
+    transition: transform .6s;
+}
+
+.dropdown .icon-arrow.close {
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -moz-transition: -moz-transform .6s;
+    -o-transition: -o-transform .6s;
+    -webkit-transition: -webkit-transform .6s;
+    transition: transform .6s;
+}
+
+.dropdown .icon-arrow:before {
+    content: '\25BC';
+}
+
+.dropdown .dropdown-menu {
+    max-height: 0;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown .dropdown-menu li {
+    padding: 0;
+}
+
+.dropdown .dropdown-menu li a {
+    display: block;
+    color: #6e6e6e;
+    background: #EEE;
+    -moz-box-shadow: 0 1px 0 #fff inset,0 -1px 0 #d4d4d4 inset;
+    -webkit-box-shadow: 0 1px 0 #fff inset,0 -1px 0 #d4d4d4 inset;
+    box-shadow: 0 1px 0 #fff inset,0 -1px 0 #d4d4d4 inset;
+    text-shadow: 0 -1px 0 rgba(255,255,255,0.3);
+    padding: 10px;
+}
+
+.dropdown .dropdown-menu li a:hover {
+    background: #f6f6f6;
+}
+
+.dropdown .show,.dropdown .hide {
+    -moz-transform-origin: 50% 0;
+    -ms-transform-origin: 50% 0;
+    -webkit-transform-origin: 50% 0;
+    transform-origin: 50% 0;
+}
+
+.dropdown .show {
+    display: block;
+    max-height: 9999px;
+    -moz-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+    animation: showAnimation .5s ease-in-out;
+    -moz-animation: showAnimation .5s ease-in-out;
+    -webkit-animation: showAnimation .5s ease-in-out;
+    -moz-transition: max-height 1s ease-in-out;
+    -o-transition: max-height 1s ease-in-out;
+    -webkit-transition: max-height 1s ease-in-out;
+    transition: max-height 1s ease-in-out;
+}
+
+.dropdown .hide {
+    max-height: 0;
+    -moz-transform: scaleY(0);
+    -ms-transform: scaleY(0);
+    -webkit-transform: scaleY(0);
+    transform: scaleY(0);
+    animation: hideAnimation .4s ease-out;
+    -moz-animation: hideAnimation .4s ease-out;
+    -webkit-animation: hideAnimation .4s ease-out;
+    -moz-transition: max-height .6s ease-out;
+    -o-transition: max-height .6s ease-out;
+    -webkit-transition: max-height .6s ease-out;
+    transition: max-height .6s ease-out;
+}
+
+@keyframes showAnimation {
+0% {
+    -moz-transform: scaleY(0.1);
+    -ms-transform: scaleY(0.1);
+    -webkit-transform: scaleY(0.1);
+    transform: scaleY(0.1);
+}
+
+40% {
+    -moz-transform: scaleY(1.04);
+    -ms-transform: scaleY(1.04);
+    -webkit-transform: scaleY(1.04);
+    transform: scaleY(1.04);
+}
+
+60% {
+    -moz-transform: scaleY(0.98);
+    -ms-transform: scaleY(0.98);
+    -webkit-transform: scaleY(0.98);
+    transform: scaleY(0.98);
+}
+
+80% {
+    -moz-transform: scaleY(1.04);
+    -ms-transform: scaleY(1.04);
+    -webkit-transform: scaleY(1.04);
+    transform: scaleY(1.04);
+}
+
+100% {
+    -moz-transform: scaleY(0.98);
+    -ms-transform: scaleY(0.98);
+    -webkit-transform: scaleY(0.98);
+    transform: scaleY(0.98);
+}
+
+80% {
+    -moz-transform: scaleY(1.02);
+    -ms-transform: scaleY(1.02);
+    -webkit-transform: scaleY(1.02);
+    transform: scaleY(1.02);
+}
+
+100% {
+    -moz-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+}
+}
+
+@-moz-keyframes showAnimation {
+0% {
+    -moz-transform: scaleY(0.1);
+    -ms-transform: scaleY(0.1);
+    -webkit-transform: scaleY(0.1);
+    transform: scaleY(0.1);
+}
+
+40% {
+    -moz-transform: scaleY(1.04);
+    -ms-transform: scaleY(1.04);
+    -webkit-transform: scaleY(1.04);
+    transform: scaleY(1.04);
+}
+
+60% {
+    -moz-transform: scaleY(0.98);
+    -ms-transform: scaleY(0.98);
+    -webkit-transform: scaleY(0.98);
+    transform: scaleY(0.98);
+}
+
+80% {
+    -moz-transform: scaleY(1.04);
+    -ms-transform: scaleY(1.04);
+    -webkit-transform: scaleY(1.04);
+    transform: scaleY(1.04);
+}
+
+100% {
+    -moz-transform: scaleY(0.98);
+    -ms-transform: scaleY(0.98);
+    -webkit-transform: scaleY(0.98);
+    transform: scaleY(0.98);
+}
+
+80% {
+    -moz-transform: scaleY(1.02);
+    -ms-transform: scaleY(1.02);
+    -webkit-transform: scaleY(1.02);
+    transform: scaleY(1.02);
+}
+
+100% {
+    -moz-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+}
+}
+
+@-webkit-keyframes showAnimation {
+0% {
+    -moz-transform: scaleY(0.1);
+    -ms-transform: scaleY(0.1);
+    -webkit-transform: scaleY(0.1);
+    transform: scaleY(0.1);
+}
+
+40% {
+    -moz-transform: scaleY(1.04);
+    -ms-transform: scaleY(1.04);
+    -webkit-transform: scaleY(1.04);
+    transform: scaleY(1.04);
+}
+
+60% {
+    -moz-transform: scaleY(0.98);
+    -ms-transform: scaleY(0.98);
+    -webkit-transform: scaleY(0.98);
+    transform: scaleY(0.98);
+}
+
+80% {
+    -moz-transform: scaleY(1.04);
+    -ms-transform: scaleY(1.04);
+    -webkit-transform: scaleY(1.04);
+    transform: scaleY(1.04);
+}
+
+100% {
+    -moz-transform: scaleY(0.98);
+    -ms-transform: scaleY(0.98);
+    -webkit-transform: scaleY(0.98);
+    transform: scaleY(0.98);
+}
+
+80% {
+    -moz-transform: scaleY(1.02);
+    -ms-transform: scaleY(1.02);
+    -webkit-transform: scaleY(1.02);
+    transform: scaleY(1.02);
+}
+
+100% {
+    -moz-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+}
+}
+
+@keyframes hideAnimation {
+0% {
+    -moz-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+}
+
+60% {
+    -moz-transform: scaleY(0.98);
+    -ms-transform: scaleY(0.98);
+    -webkit-transform: scaleY(0.98);
+    transform: scaleY(0.98);
+}
+
+80% {
+    -moz-transform: scaleY(1.02);
+    -ms-transform: scaleY(1.02);
+    -webkit-transform: scaleY(1.02);
+    transform: scaleY(1.02);
+}
+
+100% {
+    -moz-transform: scaleY(0);
+    -ms-transform: scaleY(0);
+    -webkit-transform: scaleY(0);
+    transform: scaleY(0);
+}
+}
+
+@-moz-keyframes hideAnimation {
+0% {
+    -moz-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+}
+
+60% {
+    -moz-transform: scaleY(0.98);
+    -ms-transform: scaleY(0.98);
+    -webkit-transform: scaleY(0.98);
+    transform: scaleY(0.98);
+}
+
+80% {
+    -moz-transform: scaleY(1.02);
+    -ms-transform: scaleY(1.02);
+    -webkit-transform: scaleY(1.02);
+    transform: scaleY(1.02);
+}
+
+100% {
+    -moz-transform: scaleY(0);
+    -ms-transform: scaleY(0);
+    -webkit-transform: scaleY(0);
+    transform: scaleY(0);
+}
+}
+
+@-webkit-keyframes hideAnimation {
+0% {
+    -moz-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+}
+
+60% {
+    -moz-transform: scaleY(0.98);
+    -ms-transform: scaleY(0.98);
+    -webkit-transform: scaleY(0.98);
+    transform: scaleY(0.98);
+}
+
+80% {
+    -moz-transform: scaleY(1.02);
+    -ms-transform: scaleY(1.02);
+    -webkit-transform: scaleY(1.02);
+    transform: scaleY(1.02);
+}
+
+100% {
+    -moz-transform: scaleY(0);
+    -ms-transform: scaleY(0);
+    -webkit-transform: scaleY(0);
+    transform: scaleY(0);
+}
+}
+
+</style>
+<body class="move">
+  <div id="nodeTooltip" class="hidden hyphenation">
+    <p>
+      <span id="value0"></span>
+    </p>
+    <p style="line-height: .5em"><br></p>
+    <p>
+      <span id="value1"></span>
+      <span id="value2"></span>
+    </p>
+    <p>
+      <span id="value3"></span>
+    </p>
+  </div>
+  <div id="linkTooltip" class="hidden hyphenation">
+    <p>
+      <span id="value0"></span>
+      <span id="value1"></span>
+    </p>
+    <p id="value2"></p>
+    <p>
+      <span id="TooltipUncertaintyType" class="hidden">Type of Uncertainty: </span>
+      <span id="value3"></span>
+    </p>
+    <p id="value4"></p>
+    <p id="value5"></p>
+  </div>
+    <div class="container">
+    <li class="dropdown">
+      <a href="#" data-toggle="dropdown">Node Information<i class="icon-arrow"></i></a>
+      <ul class="dropdown-menu">
+          <p class="nodeTooltipAlert">Click on a node to display its information.</p>
+            <table class="tooltipNode">
+              <tr>
+                <td class="category">Node</td>
+                <td class="dataNodeName hyphenation"></td>
+              </tr>
+              <tr>
+                <td class="category nodeSemanticField1">Semantic Fields</td>
+                <td class="dataSemanticField1 hyphenation"></td>
+              </tr>
+              <tr>
+              <tr>
+                <td class="category nodeSemanticField2"></td>
+                <td class="dataSemanticField2 hyphenation"></td>
+              </tr>
+              <tr>
+                <td class="category nodeSemanticField3"></td>
+                <td class="dataSemanticField3 hyphenation"></td>
+              </tr>
+              <tr>
+                <td class="category nodeSemanticField4"></td>
+                <td class="dataSemanticField4 hyphenation"></td>
+              </tr>
+              <tr>
+                <td class="category nodeSource">Source</td>
+                <td class="dataNodeSource hyphenation"></td>
+              </tr>
+              <tr>
+                <td class="category nodeCitation">Citation</td>
+                <td class="dataNodeCitation hyphenation"></td>
+              </tr>
+              <tr>
+                <td class="category nodeSourceLink">Citation Link</td>
+                <td class="dataNodeSourceLink hyphenation"></td>
+              </tr>
+            </table>
+        </ul>
+      </li>
+    <li class="dropdown">
+      <a href="#" data-toggle="dropdown">Link Information<i class="icon-arrow"></i></a>
+      <ul class="dropdown-menu">
+                  <p class="linkTooltipAlert">Click on a link to display its information.</p>
+              <table class="tooltipLink" >
+                <tr>
+                  <td class="category dataSourceSyntacticalRole"></td>
+                  <td class="dataSource hyphenation"></td>
+                </tr>
+                <tr>
+                  <td class="category dataTargetSyntacticalRole"></td>
+                  <td class="dataTarget hyphenation"></td>
+                </tr>
+                <tr>
+                  <td class="category">Relationship</td>
+                  <td class="dataRelationship hyphenation"></td>
+                </tr>
+                  <td class="category nodeSource">Source</td>
+                  <td class="dataNodeSource hyphenation"></td>
+                </tr>
+                <tr>
+                  <td class="category">Citation</td>
+                  <td class="dataLinkCitation hyphenation"></td>
+                </tr>
+              </table>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" data-toggle="dropdown">Tools<i class="icon-arrow"></i></a>
+            <ul class="dropdown-menu"> 
+    <div id="buttonBar">
+    <!--
+        <div id="categorizebyLemmata">
+          <p style="margin: 0px"> Categorize by lemmata </p>
+          <div class="onoffswitch">
+          <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+          <label class="onoffswitch-label" for="myonoffswitch">
+              <span class="onoffswitch-inner"></span>
+              <span class="onoffswitch-switch"></span>
+          </label>
+          </div>
+        </div>
+        <div id="categorizeSourceType">
+          <p style="margin: 0px"> Categorize by Source Type </p>
+          <div class="onoffswitch">
+          <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+          <label class="onoffswitch-label" for="myonoffswitch">
+              <span class="onoffswitch-inner"></span>
+              <span class="onoffswitch-switch"></span>
+          </label>
+          </div>
+        </div>
+    !-->
+    
+        <div id="controls1">
+        </div>
+        <div id="controls2">
+        </div>
+        <div id="controls3">
+        </div>
+        <div id="controls4">
+        </div>
+        <div id="controls5">
+        </div>
+
+        <!--
+        <div id="controls3">
+        </div>
+        <div id="controls4">
+        </div>
+        <div id="controls5">
+        </div>
+      !-->
+    </div>
+    </div>
+  </li>
+
+  <!--
+    <div id= "buttonBarAndColorKey">
+        <table id="colorKey">
+          <tr>
+            <th colspan="2">Legend</th>
+          </tr>
+          <tr>
+            <td class="legendLabel1"></td>
+          </tr>
+          <tr>
+            <td class="legendLabel2"></td>
+          </tr>
+          <tr>
+            <td class="legendLabel3"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  -->
+
+  
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script><script>
+  
+  var color = d3.scale.category20();
+  var force = d3.layout.force()
+    .charge(function(d) {
+      if (d.linkType == "nodeActorConnection") {
+        return 300
+      }
+      if (d.linkType == "vennDiagram") {
+        return -200
+      }
+      else {return -400};
+      }
+    )
+    .gravity(.001)
+    .theta(.001)
+    .linkDistance(function(d) {
+      if (d.linkType == "nodeActorConnection") {
+        return -150
+      }
+      else if (d.linkType == "vennDiagram") {
+        return 70
+      }
+      else if (d.linkType == "vennDiagramDistance") {
+        return 120
+      }
+      else if (d.linkType == "vennDiagramDistance1") {
+        return 60
+      }
+      else {return 400};
+      }
+    )
+  var zoom = d3.behavior.zoom()
+    .scaleExtent([.4, 5])
+    .on("zoom", zoomed);
+  var drag = force.drag()
+    .on("dragstart", dragstart);
+  var svg = d3.select("body").append("svg")
+    .attr("width", window.innerWidth - 0)
+    .attr("height", window.innerHeight - 5)
+    .call(zoom)
+    .append("g")
+    .attr("transform","translate(275,120)scale(.4,.4)");
+  var rect = svg.append("rect")
+    .attr("width", window.innerWidth - 0)
+    .attr("height", window.innerHeight - 5)
+    .style("fill", "none")
+    .style("pointer-events", "all");
+  var marker = svg.append('defs')
+    .append('marker')
+    .attr("id", "Triangle")
+    .attr("refX", 18)
+    .attr("refY", 6)
+    .attr("markerUnits", 'userSpaceOnUse')
+    .attr("markerWidth", 12)
+    .attr("markerHeight", 18)
+    .attr("orient", 'auto')
+    .append('path')
+    .attr("d", 'M 0 0 12 6 0 12 3 6');
+
+  var container = svg.append("g");
+  // Resize the SVG height and width based on window dimensions.
+  resize();
+    d3.select(window).on("resize", resize);
+  var trianglePolygon =  container
+    .append("polygon")       // attach a polygon
+    .attr("points", "1033.6024502488306,279.940199629, 1561.2672194405907,441.935663223, 1681.4588818087566,827.663116659")  // x,y points 
+    .style("opacity", ".3")
+    .attr("fill", "none")
+  var trianglePolygon1 =  container
+    .append("polygon")       // attach a polygon
+    .attr("points", "1067.0731226955943,649.309453803, 1529.1501614170652,540.298548616, 1639.0292442436178,818.412561593")  // x,y points 
+    .style("opacity", ".3")
+    .attr("fill", "none")
+
+
+d3.json("immigrantArticlesFixed.json", function(error, graph) {
+
+  force
+    .nodes(graph.nodes)
+    .links(graph.links)
+    .start();
+
+    /*.attr("x1", d.source.x)
+    .attr("y1", d.source.y)
+    .attr("x2", d.target.x)
+    .attr("y2", d.target.y)*/
+      
+  var link = container.append("g")
+    .attr("class", "links")
+    .selectAll(".link")
+    .data(graph.links)
+    .enter()
+    //add hyperlink functionality and then draw line
+    .append("svg:a")
+    .attr("xlink:href", function(d){return d.url;})
+    .append("line")
+    .attr("marker-end", function(d) {
+      if (d.linkType == "actorConnection") {return "url(#Triangle)"}
+        else {return "none"}
+      }
+    )
+    .style("stroke-dasharray", 
+      function(d) {
+        if (d.certainty == "uncertain") {return "5"}
+        else {return "0"}
+        ;}
+    )
+    .classed("linkRegular", 
+      function(d) {
+        if (d.linkType == "nodeActorConnection") {return false}
+        else if (d.linkType == "vennDiagram") {return false}
+        else {return true}
+      }
+    )
+    .classed("hidden", 
+      function(d) {
+        if (d.linkType == "nodeActorConnection") {return true}
+        else if (d.linkType == "vennDiagram") {return true}
+        else {return false}
+      }
+    )
+    .on("mousemove", edgeOver)
+    .on("click", edgeClick)
+    .on("mouseleave", edgeOut)
+
+  var loading = svg.append("text")
+    .attr("x", width / 2)
+    .attr("y", height / 2)
+    .attr("dy", ".35em")
+    .style("text-anchor", "middle")
+    .style("font-size", "2em")
+    .text("Simulating. One moment please…");
+
+  // create gradient filter
+  var gradient = svg.append("svg:defs")
+    .append("svg:linearGradient")
+      .attr("id", "gradient")
+      .attr("x1", "75%")
+      .attr("y1", "0%")
+      .attr("x2", "0%")
+      .attr("y2", "0%")
+      .attr("spreadMethod", "pad");
+
+  gradient.append("svg:stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "transparent")
+      .attr("stop-opacity", 1);
+
+  gradient.append("svg:stop")
+      .attr("offset", "50%")
+      .attr("stop-color", "#a55194")
+      .attr("stop-opacity", 1);
+
+  // create gradient filter
+  var gradient1 = svg.append("svg:defs")
+    .append("svg:linearGradient")
+      .attr("id", "gradient1")
+      .attr("x1", "75%")
+      .attr("y1", "0%")
+      .attr("x2", "0%")
+      .attr("y2", "25%")
+      .attr("spreadMethod", "pad");
+
+  gradient1.append("svg:stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "transparent")
+      .attr("stop-opacity", 1);
+
+  gradient1.append("svg:stop")
+      .attr("offset", "50%")
+      .attr("stop-color", "#6b6ecf")
+      .attr("stop-opacity", 1);
+
+  var node = container.append("g")
+    .selectAll(".node")
+    .data(graph.nodes)
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    .attr("cx", function(d) { return d.x; })
+    .attr("cy", function(d) { return d.y; })
+    //.call(drag)
+      
+node.append("circle")
+   .attr("r", 
+    function(d) {
+      if (d.lemma == "Mūlamadhyamakakārikā") {
+        return 150
+      }
+      else if (d.lemma == "Prassanapadā") {
+        return 150
+      }
+      else if (d.lemma == "Mental activity ") {
+        return 220
+      }
+      else if (d.lemma == "Mental activity") {
+        return 180
+      }
+      else if (d.lemma == "belief") {
+        return (d.weight - 1)  * 8
+      }
+      else if (d.isNode == "node") {
+        return (d.weight + 1)  * 8
+      }
+      else if (d.lemma == "") {
+        return 0
+      }
+      else {return 6}
+      })
+   .style("stroke", function(d) {
+      if (d.isNode == "node") {
+        return "white"
+      }
+      else {return "white"}
+      }
+   )
+   .style("opacity", function(d) {
+      if (d.isNode == "node") {
+        return ".25"
+      }
+      else {return "1"}
+      }
+   )
+   /*.style("fill", function (d){
+    if (d.lemma == "Prassanapadā") {
+        return "blue"
+      }
+    else if (d.lemma == "Mūlamadhyamakakārikā") {
+      return "blue"
+      }
+   })*/
+   .style("stroke-width", "1px")
+
+  node.append("svg:text")
+    .attr("class", function (d) {
+      if (d.isNode == "node") {
+        return "node"
+      }
+      else {return "nodetext"}
+      })
+    .style("text-anchor", function(d) {
+      if (d.isNode == "node") {
+        return "middle"
+      }
+      else {return "start"}
+      })
+    .attr("x", function(d) {
+      if (d.isNode == "node") {
+        return +0
+      }
+      else {return +14}
+      })
+    .attr("y", function(d) {
+      if (d.lemma == "Mūlamadhyamakakārikā") {
+        return -180
+      }
+      else if (d.lemma == "Prassanapadā") {
+        return -180
+      }
+      else if (d.lemma == "Mental activity ") {
+        return -240
+      }
+      else if (d.lemma == "Mental activity") {
+        return -210
+      }
+      else if (d.lemma == "belief") {
+        return (d.weight - 1)  * -9
+      }
+      else if (d.lemma == "Perception/cognition") {
+        return (d.weight + 1)  * -8.5
+      }
+
+      else if (d.isNode == "node") {
+        return (d.weight + 1)  * -9
+      }
+      else {return +5}
+      })
+
+   .style("fill", function(d) {
+      if (d.isNode == "node") {
+        return "black"
+      }
+      else {return "black"}
+    })
+
+    .style("font-size", function(d) {
+      if (d.isNode == "node") {
+        return (d.weight + 2)  * .3 + "em"
+      }
+      else {return "1.2em"}
+      })
+    .style("font-style", function(d) {
+      if (d.isNode == "node") {
+        return "none"
+      }
+      else {return "italic"}
+      })
+    .text(function (d) {
+      if (d.cotext == "") {
+        return d.lemma
+      }
+      else {return d.cotext}
+      })
+                
+  force.on("tick", function() {
+      link.attr("x1", function(d) { return d.source.x; })
+          .attr("y1", function(d) { return d.source.y; })
+          .attr("x2", function(d) { return d.target.x; })
+          .attr("y2", function(d) { return d.target.y; });
+
+      node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+  });
+  
+  var linkedByIndex = {};
+  graph.links.forEach(function(d) {
+      linkedByIndex[d.source.index + "," + d.target.index] = 1;
+  });
+
+  function isConnected(a, b) {
+      return linkedByIndex[a.index + "," + b.index] || linkedByIndex[b.index + "," + a.index];
+  }
+
+  //Remove D3 zoom behavior on dblclick
+  //d3.select("svg").on("dblclick.zoom", null);
+  node.on("mousemove", function(d){
+    d3.select(this)
+      .classed("cursorHand", true);
+    d3.select(this)
+      .select("circle")
+      .transition()
+      .duration(100)
+      .attr("r", function (d) {
+        if (d.isNode == "actor") {return "9"}
+        else {return none}
+      })
+    //Update the tooltip position and display relevant information
+    d3.select(this)
+    d3.select("#nodeTooltip")
+      .style("position", "absolute")
+      .style("left", (event.clientX) - 170 + "px")
+      .style("top", (event.clientY) + 20 + "px")
+      .select("#value0")
+      //.text(data.map(function(d) { return d.lemmata; }))
+      .text("Actor: " + d.lemma);
+    d3.select("#nodeTooltip")
+      .select("#value1")
+      .text(d.source)
+    d3.select("#nodeTooltip")
+      .select("#value2")
+      .text(d.reference)
+    d3.select("#nodeTooltip")
+      .select("#value3")
+      .text(d.citation)
+
+    //Show the tooltip
+    d3.select("#nodeTooltip")
+     .classed("hidden", false);
+  });
+  node.on("mouseout", function(d){
+
+    d3.select(this)
+     .select("circle")
+     .transition()
+     .duration(100)
+     .attr("r", function (d) {
+      if (d.isNode == "actor") {return "6"}
+      else {return none}
+    })
+
+    d3.select(this)
+     .classed("cursorHand", true);
+  
+  //Show the tooltip
+    d3.select("#nodeTooltip").classed("hidden", true); 
+  });
+
+    node.on("click", function(d){
+
+    node.classed("node-active", function (o) {
+        thisOpacity = isConnected(d, o) ? true : false;
+        this.setAttribute('fill-opacity', thisOpacity);
+        return thisOpacity;
+    });
+
+    link.classed("link-active", function(o) {
+        return o.source === d || o.target === d ? true : false;
+    })
+
+    link.classed("link-active", function(o) {
+        return o.source === d || o.target === d ? true : false;
+    })
+
+    link.classed("wideLink", function(o) {
+        return o.source === d || o.target === d ? true : false;
+    })
+    
+    d3.select(this).classed("node-active", function(d) {
+          if (d.isNode == "node") {
+            return false
+          }
+          else {return true}
+          })
+
+    d3.select(this)
+    .classed("cursorHand", true);
+
+    // Remove the hidden class on td elements within tooltipLink class to display link information. Add hidden class to p elements with linkTooltipAlert class.
+        d3.select("table.tooltipNode")
+          .classed("hidden", false)
+
+        d3.select(".nodeTooltipAlert")
+          .classed("hidden", true)
+
+    //send data to node tooltip
+      d3.selectAll("td.dataNode")
+      .data(d3.values(d))
+      .html(function(p) {return p})
+
+      d3.selectAll(".dataNodeName")
+      .html(function(p) {
+              if (d.cotext == "") {
+                return d.lemma
+              }
+              else {return d.cotext}
+            }
+      )
+
+      d3.selectAll("td.dataSemanticField1")
+      .html("<a href="+ "http://historicalthesaurus.arts.gla.ac.uk/search/" + ">" + d.semanticField1 + "</a>")
+
+      .classed("hidden", function(p) {
+              if (d.semanticField1 != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+      d3.selectAll("td.nodeSemanticField1")
+      .classed("hidden", function(p) {
+              if (d.semanticField1 != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+      
+      d3.selectAll("td.dataSemanticField2")
+      .html("<a href="+ "http://historicalthesaurus.arts.gla.ac.uk/search/" + ">" + d.semanticField2 + "</a>")
+
+      .classed("hidden", function(p) {
+              if (d.semanticField2 != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+      d3.selectAll("td.nodeSemanticField2")
+      .classed("hidden", function(p) {
+              if (d.semanticField2 != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+
+      d3.selectAll("td.dataSemanticField3")
+      .html("<a href="+ "http://historicalthesaurus.arts.gla.ac.uk/search/" + ">" + d.semanticField3 + "</a>")
+
+      .classed("hidden", function(p) {
+              if (d.semanticField3 != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+      d3.selectAll("td.nodeSemanticField3")
+      .classed("hidden", function(p) {
+              if (d.semanticField3 != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+
+      d3.selectAll("td.dataSemanticField4")
+      .html("<a href="+ "http://historicalthesaurus.arts.gla.ac.uk/search/" + ">" + d.semanticField4 + "</a>")
+
+      .classed("hidden", function(p) {
+              if (d.semanticField4 != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+      d3.selectAll("td.nodeSemanticField4")
+      .classed("hidden", function(p) {
+              if (d.semanticField4 != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+
+      d3.selectAll("td.dataSemanticField5")
+      .html("<a href="+ "http://historicalthesaurus.arts.gla.ac.uk/search/" + ">" + d.semanticField5 + "</a>")
+
+      .classed("hidden", function(p) {
+              if (d.semanticField5 != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+      d3.selectAll("td.nodeSemanticField5")
+      .classed("hidden", function(p) {
+              if (d.semanticField5 != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+
+      d3.selectAll("td.dataNodeSource")
+      .html(d.source)
+
+      .classed("hidden", function(p) {
+              if (d.source != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+
+      d3.selectAll("td.dataReference")
+      .html(d.reference)
+
+      .classed("hidden", function(p) {
+              if (d.reference != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+
+      d3.selectAll("td.dataSourceReference")
+
+      .classed("hidden", function(p) {
+              if (d.reference != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+
+      d3.selectAll("td.nodeSource")
+      .classed("hidden", function(p) {
+              if (d.source != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+
+      d3.selectAll("td.dataNodeSourceLink")
+      .classed("hidden", function(p) {
+              if (d.passageLink != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+      .html("<a href="+ d.passageLink + ">" + "Go to passage" + "</a>")
+
+      d3.selectAll("td.nodeSourceLink")
+      .classed("hidden", function(p) {
+              if (d.passageLink != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+
+      d3.selectAll("td.dataNodeCitation")
+      .html(d.citation)
+
+      .classed("hidden", function(p) {
+              if (d.citation != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+
+      d3.selectAll("td.nodeCitation")
+      .classed("hidden", function(p) {
+              if (d.citation != "") {
+                return false
+              }
+              else {return true}
+              }
+      )
+
+    /*//reposition the tooltip based on cursor location and remove hidden attribute
+      d3.select("#nodeTooltip")
+      .classed("hidden", false)
+      .style("position", "absolute")
+      .style("left", (event.clientX) + 15 + "px")
+      .style("top", (event.clientY) - 0 + "px")
+      .transition()
+      .duration(0)
+      .delay(300)
+      .style("opacity", "1")*/
+    })
+// Apply a hidden class on td elements to prevent the display of unpopulated tables prior to user mouseover.
+  d3.selectAll("table")
+    .classed("hidden", true)
+  function edgeOver(d) {
+    d3.select(this)
+    .transition(250)
+    .attr("class", "link-active")
+    d3.selectAll("circle")
+    .transition(250)
+    node.classed("node-linked", function (p) {return p == d.source ? true : p == d.target ?
+    true : false})
+     //Update the tooltip position and display relevant information
+        d3.select(this)
+        d3.select("#linkTooltip")
+          .style("position", "absolute")
+          .style("left", (event.clientX) - 170 + "px")
+          .style("top", (event.clientY) + 15 + "px")
+          .select("#value0")
+          //.text(data.map(function(d) { return d.lemmata; }))
+          .text(d.lemma);
+        d3.select("#linkTooltip")
+          .select("#value0")
+          .text(function(p) {
+            if (d.source.cotext == "") {
+              return "Connection: " + d.source.lemma
+            } else {
+              return "Connection: " + d.source.cotext}
+            })
+        d3.select("#linkTooltip")
+          .select("#value1")
+          .text(function(p) {
+            if (d.target.cotext == "") {
+              return " + " + d.target.lemma
+            } else {
+              return " + " + d.target.cotext}
+            });
+        d3.select("#linkTooltip")
+          .select("#value2")
+          .text("Relationship: " + d.relationship)
+        d3.selectAll("#TooltipUncertaintyType")
+          .classed("hidden", function(p) {
+            if (d.uncertaintyType != "") {
+              return false
+            } else {
+              return true}
+            });
+        d3.select("#linkTooltip")
+          .select("#value3")
+          .text(d.uncertaintyType)
+        d3.select("#linkTooltip")
+          .select("#value4")
+          .text("Reference: " + d.source.source + " " + d.source.reference)
+        d3.select("#linkTooltip")
+          .select("#value5")
+          .text("Citation: " + d.source.citation)
+        d3.selectAll("td.dataSource")
+        //Show the tooltip
+        d3.select("#linkTooltip")
+          .classed("hidden", false);
+  }
+  function edgeClick(d) {
+    d3.select(this)
+      .transition(250)
+      .attr("class", "link-active")
+    d3.selectAll("circle")
+      .transition(250)
+      node.classed("node-linked", function (p) {return p == d.source ? true : p == d.target ?
+      true : false})
+// Remove the hidden class on td elements within tooltipLink class to display link information. Add hidden class to p elements with linkTooltipAlert class.
+    d3.select("table.tooltipLink")
+      .classed("hidden", false)
+    d3.select(".linkTooltipAlert")
+      .classed("hidden", true)
+// Send link data to tooltip.
+    d3.selectAll("td.data")
+      .data(d3.values(d))
+      .html(function(p) {return p})
+    d3.selectAll("td.dataSource")
+      .html(
+        function(p) {
+          if (d.source.cotext == "") {
+          return d.source.lemma
+          }
+          else {return d.source.cotext}
+          }
+      )
+    d3.selectAll("td.dataTarget")
+      .html(
+        function(p) {
+          if (d.target.cotext == "") {
+          return d.target.lemma
+          }
+          else {return d.target.cotext}
+          }
+      )
+    d3.selectAll("td.dataTargetSyntacticalRole")
+      .html(
+        function(p) {
+          if (d.target.cotext == "") {
+          return "Lemma"
+          }
+          else {return "Cotext"}
+          }
+      )
+    d3.selectAll("td.dataSourceSyntacticalRole")
+      .html(
+        function(p) {
+          if (d.source.cotext == "") {
+          return "Lemma"
+          }
+          else {return "Cotext"}
+          }
+      )
+    d3.selectAll("td.dataRelationship")
+      .html(d.relationship)
+    d3.selectAll("td.dataNodeSource")
+      .html(d.source.source)
+      .classed("hidden", function(p) {
+        if (d.source.source != "") {
+          return false
+        }
+        else {return true}
+        })
+    d3.selectAll("td.dataReference")
+      .html(d.source.reference)
+      .classed("hidden", function(p) {
+        if (d.source.reference != "") {
+          return false
+        }
+        else {return true}
+        })
+    d3.selectAll("td.dataLinkCitation")
+      .html(d.source.citation)
+    d3.selectAll("td.dataLinkUncertaintyType")
+      .html(d.uncertaintyType)
+        .classed("hidden", function(p) {
+          if (d.uncertaintyType != "") {
+            return false
+          }
+          else {return true}
+          })
+    d3.selectAll("td.uncertaintyType")
+        .classed("hidden", function(p) {
+          if (d.uncertaintyType != "") {
+            return false
+          }
+          else {return true}
+          })
+    d3.selectAll("td.dataConfidence")
+      .html(d.Confidence)
+  } //end send link data to tooltip
+
+  function edgeOut(d) {
+    d3.select("#linkTooltip")
+      .classed("hidden", true)
+    d3.select(this)
+      .transition(250)
+      .attr("class", "linkRegular")
+    d3.selectAll("circle")
+      .transition(250)
+    node.classed("node-linked", function (p) {return p == d.source ? false : p == d.target ? false : false})  
+  }
+
+  loading.remove();
+
+//create toolbar
+
+    d3.select("#controls1")
+    .append("button")
+    .on("click", categorizeLemma)
+    .html("categorizeLemma");
+  d3.select("#controls2")
+    .append("button")
+    .on("click", categorizeSourceType)
+    .html("categorizeSourceType");
+  d3.select("#controls3")
+    .append("button")
+    .on("click", categorizeSource)
+    .html("categorizeSource");
+  d3.select("#controls4")
+    .append("button")
+    .on("click", categorizeRelationship)
+    .html("categorizeRelationship");
+  /*d3.select("#controls5")
+    .append("button")
+    .on("click", clear)
+    .html("clear links");*/
+
+  function sizeByDegree() {
+    force.stop();
+    d3.selectAll("circle")
+      .attr("r", function(d) {return d.weight * 2.5})
+  }
+//end create toolbar
+    
+var positions = nodes.map(function(d) { return [d.x, d.y]; });
+
+});// End load data from JSON file.
+
+  function resize() {
+    width = window.innerWidth - 0, height = window.innerHeight - 5;
+    d3.selectAll("svg")
+    .attr("width", width).attr("height", height);
+    d3.selectAll("rect")
+    .attr("width", width).attr("height", height);
+    force.size([width, height]).resume();
+  }
+
+  function zoomed() {
+    container
+    .attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+  }
+
+  function dblclick(d) {
+    d3.select(this).classed("fixed", d.fixed = false);
+  }
+
+  function dragstart(d) {
+    d3.event.sourceEvent.stopPropagation();  
+    d3.select(this).classed("fixed", d.fixed = true);
+  }
+
+  function fixNode(d) {
+      d3.select(this)
+      .select("node")
+      .style("stroke", "purple")
+      .style("stroke-width", 10);
+      d.fixed = true;
+  }
+
+  function unfixNode(d) {
+    d3.select(this)
+    .classed("fixed", d.fixed = false);
+    d3.select(this)
+    .select("node")
+    .style("stroke-width", 1)
+  }
+
+  function filterNetwork() {
+     d3.selectAll("g.node")
+      .select("circle")
+      .transition(250)
+      .style("fill", function(d) {
+        if (d.lemma == "vi√klp") {return "#6b6ecf"}
+        else if (d.lemma == "vi√klp") {return "#6b6ecf"}
+      ;})
+    d3.selectAll("line")
+      .transition(250)
+      .style("stroke", function (d){
+      if (d.source.source == "Mūlamadhyamakakārikā") {
+        return "#1f77b4"
+      }
+      else if (d.source.source == "Prassanapadā") {
+        return "#6b6ecf"
+      }
+    })
+  }//end function filterNetwork
+  
+ 
+  function changeNodeLabelOn() {
+    d3.selectAll("#nodeText")
+      .remove("text")
+    d3.selectAll("g.node")
+      .append("text")
+      .attr("id", "nodeText1")
+      .style("text-anchor", "start")
+      .attr("x", +10)
+      .attr("y", + 3)
+      .attr("class", "shadow")
+      .text(function (d) {return d.SemanticFields1})
+    d3.selectAll("g.node")
+      .append("text")
+      .attr("id", "nodeText1")
+      .style("text-anchor", "start")
+      .attr("x", +10)
+      .attr("y", + 23)
+      .attr("class", "shadow")
+      .text(function (d) {return d.SemanticFields2})
+    d3.selectAll("g.node")
+      .append("text")
+      .attr("id", "nodeText1")
+      .style("text-anchor", "start")
+      .attr("x", +10)
+      .attr("y", + 43)
+      .attr("class", "shadow")
+      .text(function (d) {return d.SemanticFields3})
+  }
+
+  function changeNodeLabelOff() {
+    d3.selectAll("#nodeText1")
+      .remove("text")
+    d3.selectAll("g.node")
+      .append("text")
+      .attr("id", "nodeText")
+      .style("text-anchor", "start")
+      .attr("x", +10)
+      .attr("y", + 3)
+      .attr("class", "shadow")
+      .text(function (d) {return d.term})
+  }
+
+ function categorizeLemma() {
+
+    d3.selectAll("g.node")
+      .select("circle")
+      .transition(250)
+      .style("fill", function(d) {
+        if (d.cotext == "refugee") {return "#ff7f0e"}
+        else if (d.cotext == "migrant") {return "#1f77b4"}
+        else if (d.lemma == "refugee") {return "#ff7f0e"}
+        else if (d.lemma == "migrant") {return "#1f77b4"}
+        else if (d.lemma == "immigrant") {return "green"}
+        else if (d.cotext == "immigrant") {return "green"}
+        else {return "#000"}
+
+      ;})
+
+    d3.selectAll("td.legendLabel1")
+    //return url data from csv file
+    .style("color", "#ff7f0e")
+      .html("Lemma")
+    d3.selectAll("td.legendLabel2")
+    //return url data from csv file
+    .style("color", "#2ca02c")
+      .html("Object")
+    d3.selectAll("td.legendLabel3")
+    //return url data from csv file
+    .style("color", "#1f77b4")
+      .html("Subject")
+  }
+  function categorizeSourceType() {
+    d3.selectAll("g.node")
+      .select("circle")
+      .transition(250)
+      .style("fill", function(d) {
+        if (d.sourceType == "quote") {return "#ff7f0e"}
+        else if (d.sourceType == "article") {return "#1f77b4"}
+        else if (d.sourceType == "comment") {return "green"}
+        else {return "#000"}
+      ;})
+  }
+
+  function categorizeSource() {
+    d3.selectAll("line")
+      .transition(250)
+      .style("stroke", function(d) {
+        if (d.source.source == "Guardian") {return "lightpink"}
+        else if (d.source.source == "Daily Mail") {return "lightblue"}
+        else {return "#969696"}
+      ;})
+  }
+
+  function categorizeRelationship() {
+    d3.selectAll("line")
+      .transition(250)
+      .style("stroke", function(d) {
+        if (d.relationship == "qualifier") {return "lightpink"}
+        else if (d.relationship == "agency") {return "lightblue"}
+        else if (d.relationship == "causality") {return "lightgreen"}
+        else if (d.relationship == "object") {return "rgb(253, 174, 107)"}
+        else {return "#969696"}
+      ;})
+  }
+/*
+  function clear() {
+    d3.selectAll("line")
+      .transition(250)
+      .style("stroke", "#969696")
+  }
+*/
+
+// Dropdown Menu
+var dropdown = document.querySelectorAll('.dropdown');
+var dropdownArray = Array.prototype.slice.call(dropdown,0);
+dropdownArray.forEach(function(el){
+  var button = el.querySelector('a[data-toggle="dropdown"]'),
+      menu = el.querySelector('.dropdown-menu'),
+      arrow = button.querySelector('i.icon-arrow');
+
+  button.onclick = function(event) {
+    if(!menu.hasClass('show')) {
+      menu.classList.add('show');
+      menu.classList.remove('hide');
+      arrow.classList.add('open');
+      arrow.classList.remove('close');
+      event.preventDefault();
+    }
+    else {
+      menu.classList.remove('show');
+      menu.classList.add('hide');
+      arrow.classList.remove('open');
+      arrow.classList.add('close');
+      event.preventDefault();
+    }
+  };
+})
+
+Element.prototype.hasClass = function(className) {
+    return this.className && new RegExp("(^|\\s)" + className + "(\\s|$)").test(this.className);
+};
+  </script>
